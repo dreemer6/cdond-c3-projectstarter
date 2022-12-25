@@ -3,7 +3,7 @@ version: 2.1
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    parameters:
+    #parameters:
       # Add parameter here   
     steps:
       - run:
@@ -15,7 +15,7 @@ commands:
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
-    parameters:
+    #parameters:
       # Add parameter here     
     steps:
       - run:
@@ -69,42 +69,42 @@ jobs:
           paths: [backend/node_modules]
           key: backend-build
 
-  test-frontend:
-    docker:
+  #test-frontend:
+    #docker:
       # Docker image here
-    steps:
+    #steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
                 
-  test-backend:
-    docker:
+  #test-backend:
+    #docker:
       # Docker image here
-    steps:
+    #steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
             
-  scan-frontend:
-    docker:
+  #scan-frontend:
+    #docker:
       # Docker image here
-    steps:
+    #steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
 
-  scan-backend:
-    docker:
+  #scan-backend:
+    #docker:
       # Docker image here
-    steps:
+    #steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
 
-  deploy-infrastructure:
-    docker:
+  #deploy-infrastructure:
+    #docker:
       # Docker image here that supports AWS CLI
-    steps:
+    #steps:
       # Checkout code from git
       - run:
           name: Ensure back-end infrastructure exists
@@ -135,10 +135,10 @@ jobs:
             - project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure      
 
-  configure-infrastructure:
-    docker:
+  #configure-infrastructure:
+    #docker:
       # Docker image here that supports Ansible
-    steps:
+    #steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
       # attach workspace
@@ -154,10 +154,10 @@ jobs:
             exit 1
       # Here's where you will add some code to rollback on failure      
 
-  run-migrations:
-    docker:
+  #run-migrations:
+    #docker:
       # Docker image here that supports NodeJS
-    steps:
+    #steps:
       # Checkout code from git
       - run:
           name: Run migrations
@@ -171,10 +171,10 @@ jobs:
             exit 1
      # Here's where you will add some code to rollback on failure      
 
-  deploy-frontend:
-    docker:
+  #deploy-frontend:
+    #docker:
       # Docker image here that supports AWS CLI
-    steps:
+    #steps:
       # Checkout code from git
       - run:
           name: Install dependencies
@@ -192,10 +192,10 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure      
                     
-  deploy-backend:
-    docker:
+  #deploy-backend:
+    #docker:
       # Docker image here that supports Ansible
-    steps:
+    #steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
       # attach workspace
@@ -209,10 +209,10 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure  
 
-  smoke-test:
-    docker:
+  #smoke-test:
+    #docker:
       # Lightweight Docker image 
-    steps:
+    #steps:
       # Checkout code from git
       - run:
           name: Install dependencies
@@ -232,10 +232,10 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure  
 
-  cloudfront-update:
-    docker:
+  #cloudfront-update:
+    #docker:
       # Docker image here that supports AWS CLI
-    steps:
+    #steps:
       # Checkout code from git
       - run:
           name: Install dependencies
@@ -247,10 +247,10 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure  
 
-  cleanup:
-    docker:
+  #cleanup:
+    #docker:
       # Docker image here
-    steps:
+    #steps:
       # Checkout code from git
       - run:
           name: Get old stack workflow id
@@ -272,30 +272,30 @@ workflows:
     jobs:
       - build-frontend
       - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [test-feature-branch]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update:
-          requires: [smoke-test]
-      - cleanup:
-          requires: [cloudfront-update]
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
+      # - deploy-infrastructure:
+      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches:
+      #         only: [test-feature-branch]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
+      # - smoke-test:
+      #     requires: [deploy-backend, deploy-frontend]
+      # - cloudfront-update:
+      #     requires: [smoke-test]
+      # - cleanup:
+      #     requires: [cloudfront-update]

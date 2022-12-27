@@ -275,7 +275,7 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update --no-cache tar gzip nodejs npm aws-cli ansible
+            apk add --update --no-cache tar gzip nodejs npm aws-cli ansible curl
 
       - run:
           name: Get backend url
@@ -320,7 +320,7 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update --no-cache tar gzip nodejs npm aws-cli ansible
+            apk add --update --no-cache tar gzip nodejs npm aws-cli ansible curl
       - run:
           name: Deploy backend
           command: |

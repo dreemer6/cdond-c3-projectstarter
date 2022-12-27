@@ -1,4 +1,29 @@
 ---
+- name: Update apt packages
+  become: true
+  apt:
+    update_cache: yes
+- name: Upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+- name: Remove unneeded dependencies
+  become: true
+  apt:
+    autoremove: yes
+- name: Install dependencies
+  become: true
+  apt:
+    name: [nodejs, npm]
+    state: present
+    update_cache: yes
+- name: Install pm2
+  become: true
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
 - name: Extract archive files
   unarchive:
     src: files/artifact.tar.gz

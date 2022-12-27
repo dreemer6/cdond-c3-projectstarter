@@ -1,7 +1,7 @@
 ---
 - name: Extract archive files
   unarchive:
-    src: ~/artifact.tar.gz
+    src: files/artifact.tar.gz
     dest: .
 
 - name: Stop and start app

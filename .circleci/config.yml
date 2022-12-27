@@ -200,7 +200,7 @@ jobs:
   configure-infrastructure:
     docker:
       # Docker image here that supports Ansible
-      - image: cimg/python:3.8
+      - image: python:3.8-alpine
     steps:
       # Checkout code from git
       - checkout
@@ -210,13 +210,14 @@ jobs:
       # attach workspace
       - attach_workspace:
           at: ~/
-      - ansible-playbook/install
-      - aws-cli/setup:
-          profile-name: udapeople
-      # - run:
-      #     name: Install dependencies
-      #     command: |
+      #- ansible-playbook/install
+      #- aws-cli/setup:
+      #    profile-name: udapeople
+      - run:
+          name: Install dependencies
+          command: |
             # Your code here
+            apk add --update --no-cache tar gzip ansible aws-cli
             
       - run:
           name: Configure server

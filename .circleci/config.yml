@@ -1,5 +1,9 @@
 version: 2.1
 
+orbs:
+  ansible-playbook: orbss/ansible-playbook@0.0.5
+  aws-cli: circleci/aws-cli@3.1.4
+
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -193,24 +197,35 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment      
 
-  # configure-infrastructure:
-  #   docker:
-  #     # Docker image here that supports Ansible
-  #   steps:
-  #     # Checkout code from git
-  #     # Add ssh keys with fingerprint
-  #     # attach workspace
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           # Your code here
-  #           exit 1
-  #     - run:
-  #         name: Configure server
-  #         command: |
-  #           # Your code here
-  #           exit 1
-  #     # Here's where you will add some code to rollback on failure      
+  configure-infrastructure:
+    docker:
+      # Docker image here that supports Ansible
+      - image: cimg/python:3.8
+    steps:
+      # Checkout code from git
+      - checkout
+      # Add ssh keys with fingerprint
+      - add_ssh_keys: 
+          fingerprints: ["a8:5b:a6:c4:d1:83:d4:2f:6f:6f:bb:d5:d0:40:16:f1"]
+      # attach workspace
+      - attach_workspace:
+          at: ~/
+      - ansible-playbook/install
+      - aws-cli/setup:
+          profile-name: udapeople
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+            # Your code here
+            
+      - run:
+          name: Configure server
+          command: |
+            # Your code here
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-server.yml
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment      
 
   # run-migrations:
   #   docker:

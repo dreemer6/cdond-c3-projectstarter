@@ -274,9 +274,6 @@ jobs:
             #apk add --update --no-cache tar gzip aws-cli ansible curl
             apt update -y
             apt install -y tar gzip curl ansible
-
-      - run: npm install
-
       - run:
           name: Get backend url
           command: |
@@ -295,6 +292,7 @@ jobs:
           command: |
             # your code here
             cd frontend
+            npm install
             echo 'starting npm build'
             npm run build
             echo 'Successfully ran npm build'
@@ -317,7 +315,6 @@ jobs:
       # attach workspace
       - attach_workspace:
           at: ~/
-      - run: npm install
       - run:
           name: Install dependencies
           command: |
@@ -330,6 +327,7 @@ jobs:
           command: |
             # your code here
             cd backend
+            npm install
             npm run build
             cd ..
 

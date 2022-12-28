@@ -261,7 +261,7 @@ jobs:
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
-      - image: sleavely/node-awscli:14
+      - image: sleavely/node-awscli:14.x
     steps:
       # Checkout code from git
       - checkout
@@ -304,7 +304,7 @@ jobs:
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
-      - image: sleavely/node-awscli:14
+      - image: sleavely/node-awscli:14.x
     steps:
       # Checkout code from git
       - checkout

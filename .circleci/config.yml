@@ -1,8 +1,8 @@
 version: 2.1
 
-orbs:
+#orbs:
   #ansible-playbook: orbss/ansible-playbook@0.0.5
-  aws-cli: circleci/aws-cli@3.1.4
+  #aws-cli: circleci/aws-cli@3.1.4
 
 commands:
   destroy-environment:
@@ -295,6 +295,7 @@ jobs:
             # your code here
             cd frontend
             npm install
+            echo 'Ran npm install successfully'
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
@@ -326,13 +327,12 @@ jobs:
           name: Deploy backend
           command: |
             # your code here
-            cd backend
-            npm install
-            npm run build
+            #cd backend
+
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
-            mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-            mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
+            #mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
+            #mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
@@ -432,4 +432,4 @@ workflows:
       # - cleanup:
       #     requires: [cloudfront-update]
 
-# VS Code Extension Version: 1.4.0
+# VS Code Extension Version: 1.5.0

@@ -25,11 +25,14 @@
     production: yes
     state: present
 - name: Extract archive files
+  become: true
   unarchive:
-    src: files/artifact.tar.gz
+    src: ./artifact.tar.gz
     dest: .
 
 - name: Stop and start app
   shell: |
     pm2 stop default
     pm2 start npm -- start
+
+# VS Code Extension Version: 1.5.0

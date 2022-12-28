@@ -20,5 +20,6 @@
     - TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
     - TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
   roles:
-    - configure-server
     - deploy
+
+# VS Code Extension Version: 1.5.0

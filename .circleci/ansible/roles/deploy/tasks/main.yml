@@ -6,8 +6,8 @@
     dest: .
 
 - name: Stop and start app
+  become: true
   shell: |
-    npm install
     pm2 stop default
     pm2 start npm -- start
 

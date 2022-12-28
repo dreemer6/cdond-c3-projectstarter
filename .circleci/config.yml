@@ -208,9 +208,6 @@ jobs:
       # attach workspace
       - attach_workspace:
           at: ~/
-      #- ansible-playbook/install
-      #- aws-cli/setup:
-      #    profile-name: udapeople
       - run:
           name: Install dependencies
           command: |

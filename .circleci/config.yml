@@ -269,8 +269,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
-      - restore_cache:
-          keys: [frontend-build]
       - run:
           name: Install dependencies
           command: |
@@ -295,7 +293,7 @@ jobs:
             # your code here
             cd frontend
             echo 'starting npm installation'
-            npm ci
+            npm install
             echo 'Ran npm install successfully'
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
@@ -317,8 +315,6 @@ jobs:
       # attach workspace
       - attach_workspace:
           at: ~/
-      - restore_cache: 
-          keys: [backend-build]
       - run:
           name: Install dependencies
           command: |
@@ -329,14 +325,12 @@ jobs:
           command: |
             # your code here
             cd backend
-            npm ci
+            npm install
             npm run build
             cd ..
 
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
-            #mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-            #mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt

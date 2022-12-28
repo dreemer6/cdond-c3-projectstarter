@@ -271,7 +271,10 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update --no-cache tar gzip aws-cli ansible curl
+            #apk add --update --no-cache tar gzip aws-cli ansible curl
+            yum update -y
+            yum install -y tar gzip curl ansible
+
       - run: npm install
 
       - run:
@@ -319,7 +322,9 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update --no-cache tar gzip aws-cli ansible curl
+            #apk add --update --no-cache tar gzip aws-cli ansible curl
+            yum update -y
+            yum install -y tar gzip curl ansible
       - run:
           name: Deploy backend
           command: |

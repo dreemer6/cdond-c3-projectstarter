@@ -353,21 +353,18 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update --no-cache tar gzip aws-cli curl
+            apk add --update --no-cache aws-cli curl
+            
       - run:
-          name: Get backend url
+          name: Backend smoke test.
           command: |
-            # your code here
+            # your code here   
             export BACKEND_IP=$(aws ec2 describe-instances \
               --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
             export API_URL="http://${BACKEND_IP}:3030"
-      - run:
-          name: Backend smoke test.
-          command: |
-            # your code here
-            echo "${API_URL}"
+            echo "${API_URL}"        
             if curl "${API_URL}/api/status" | grep "ok"
             then
                 return 0

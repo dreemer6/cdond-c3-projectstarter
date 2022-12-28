@@ -266,20 +266,18 @@ jobs:
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
-      - image: python:3.8-alpine
+      - image: sleavely/node-awscli:14
     steps:
       # Checkout code from git
       - checkout
       - attach_workspace:
           at: ~/
-      - node/install:
-          install-yarn: true
-          node-version: '13.8.0'
       - run:
           name: Install dependencies
           command: |
             # your code here
             apk add --update --no-cache tar gzip aws-cli ansible curl
+      - run: npm install
 
       - run:
           name: Get backend url
@@ -299,10 +297,9 @@ jobs:
           command: |
             # your code here
             cd frontend
-            echo 'starting npm installation'
-            npm install
-            echo 'Ran npm install successfully'
+            echo 'starting npm build'
             npm run build
+            echo 'Successfully ran npm build'
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # Here's where you will add some code to rollback on failure
@@ -312,7 +309,7 @@ jobs:
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
-      - image: python:3.8-alpine
+      - image: sleavely/node-awscli:14
     steps:
       # Checkout code from git
       - checkout
@@ -322,9 +319,7 @@ jobs:
       # attach workspace
       - attach_workspace:
           at: ~/
-      - node/install:
-          install-yarn: true
-          node-version: '13.8.0'
+      - run: npm install
       - run:
           name: Install dependencies
           command: |
@@ -335,7 +330,6 @@ jobs:
           command: |
             # your code here
             cd backend
-            npm install
             npm run build
             cd ..
 

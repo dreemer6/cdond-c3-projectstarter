@@ -1,8 +1,9 @@
 version: 2.1
 
-#orbs:
+orbs:
   #ansible-playbook: orbss/ansible-playbook@0.0.5
   #aws-cli: circleci/aws-cli@3.1.4
+  node: circleci/node@5.0.3
 
 commands:
   destroy-environment:
@@ -271,11 +272,14 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
+      - node/install:
+          install-yarn: true
+          node-version: '13.8.0'
       - run:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update --no-cache tar gzip nodejs npm aws-cli ansible curl
+            apk add --update --no-cache tar gzip aws-cli ansible curl
 
       - run:
           name: Get backend url
@@ -288,6 +292,7 @@ jobs:
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+            echo NODE_OPTIONS=--openssl-legacy-provider >> frontend/.env
             cat frontend/.env
       - run:
           name: Deploy frontend objects
@@ -317,11 +322,14 @@ jobs:
       # attach workspace
       - attach_workspace:
           at: ~/
+      - node/install:
+          install-yarn: true
+          node-version: '13.8.0'
       - run:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update --no-cache tar gzip nodejs npm aws-cli ansible curl
+            apk add --update --no-cache tar gzip aws-cli ansible curl
       - run:
           name: Deploy backend
           command: |

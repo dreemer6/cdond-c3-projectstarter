@@ -420,6 +420,29 @@ jobs:
               fi
             done
   
+  add_prometheus_node_exporter:
+    docker:
+      - image: sleavely/node-awscli:14.x
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["a8:5b:a6:c4:d1:83:d4:2f:6f:6f:bb:d5:d0:40:16:f1"]
+      - run:
+          name: Install dependencies
+          command: |
+            apt update -y
+            apt install -y tar gzip ansible
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run ansible playbook to setup prometheus service
+          command: |
+            cd .circleci/ansible
+            cat inventory.txt
+            ansible-playbook -i inventory.txt prometheus-server.yml
+      - destroy-environment
+      - revert-migrations 
+
 workflows:
   default:
     jobs:
@@ -438,6 +461,8 @@ workflows:
           filters:
             branches:
               only: [master]
+      - add_prometheus_node_exporter:
+          requires: [deploy-infrastructure]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
       - run-migrations:

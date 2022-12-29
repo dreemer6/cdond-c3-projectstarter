@@ -359,7 +359,7 @@ jobs:
               --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"        
-            if curl -s --connect-timeout 10 "${API_URL}/api/status" | grep "ok"
+            if curl -s "${API_URL}/api/status" | grep "ok"
             then
                 exit 0
             else
@@ -420,7 +420,6 @@ jobs:
                     --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
             echo Stack names: "${STACKS[@]}"   
             # Remove old stacks and files
-            
             for stack_name in ${STACKS[@]}
             do
               if [[ stack_name =~ "${CIRCLE_WORKFLOW_ID:0:7}" ]]

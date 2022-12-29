@@ -351,7 +351,7 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image 
-      - image: python:3.8-alpine
+      - image: cimg/base:stable
     steps:
       # Checkout code from git
       - checkout
@@ -359,7 +359,8 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update --no-cache aws-cli curl
+            #apk add --update --no-cache aws-cli curl
+            apt install -y aws-cli curl
       - install_nodejs      
       - run:
           name: Backend smoke test.

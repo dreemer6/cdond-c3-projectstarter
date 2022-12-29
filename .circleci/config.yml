@@ -282,7 +282,6 @@ jobs:
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
-            echo NODE_OPTIONS=--openssl-legacy-provider >> frontend/.env
             cat frontend/.env
       - run:
           name: Deploy frontend objects

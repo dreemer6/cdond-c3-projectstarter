@@ -1,5 +1,4 @@
 ---
-
 - name: "Prometheus configuration play." 
   hosts: web
   user: ubuntu

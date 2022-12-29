@@ -360,7 +360,7 @@ jobs:
           command: |
             # your code here
             #apk add --update --no-cache aws-cli curl
-            apt install -y aws-cli curl
+            sudo apt install -y aws-cli curl
       - install_nodejs      
       - run:
           name: Backend smoke test.

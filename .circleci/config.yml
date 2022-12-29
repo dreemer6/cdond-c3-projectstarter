@@ -422,10 +422,8 @@ jobs:
             # Remove old stacks and files
             for stack_name in ${STACKS[@]}
             do
-              if [[ stack_name =~ "${CIRCLE_WORKFLOW_ID:0:7}" ]]
+              if [[ "${stack_name: -7}" != "${CIRCLE_WORKFLOW_ID:0:7}" ]]
               then
-                :
-              else
                 aws s3 rm "s3://udapeople-${stack_name: -7}" --recursive
                 aws cloudformation delete-stack --stack-name "${stack_name}"
               fi

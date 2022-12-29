@@ -387,10 +387,6 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #       # your code here
       - run:
           name: Update cloudfront distribution
           command: |

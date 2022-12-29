@@ -329,7 +329,6 @@ jobs:
             mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
 
             cd .circleci/ansible
-            export ANSIBLE_HOST_KEY_CHECKING=False
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
@@ -464,7 +463,7 @@ workflows:
       - add_prometheus_node_exporter:
           requires: [deploy-infrastructure]
       - configure-infrastructure:
-          requires: [deploy-infrastructure]
+          requires: [add_prometheus_node_exporter]
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:

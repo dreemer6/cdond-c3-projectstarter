@@ -312,8 +312,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # your code here
-            #apk add --update --no-cache tar gzip aws-cli ansible curl
             apt update -y
             apt install -y tar gzip curl ansible
       - run:

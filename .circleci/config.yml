@@ -39,15 +39,6 @@ commands:
               npm install
               npm run migration:revert
             fi
-  install_nodejs:
-    description: Install Node.js 13
-    steps:
-      - run:
-          name: Install Node.js 13
-          command: |
-            curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
-            sudo apt install -y nodejs
-
 jobs:
   build-frontend:
     docker:
@@ -351,17 +342,15 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image 
-      - image: cimg/base:stable
+      - image: sleavely/node-awscli:14.x
     steps:
       # Checkout code from git
       - checkout
       - run:
           name: Install dependencies
           command: |
-            # your code here
-            #apk add --update --no-cache aws-cli curl
-            sudo apt install -y aws-cli curl
-      - install_nodejs      
+            apt update -y
+            apt install -y curl      
       - run:
           name: Backend smoke test.
           command: |

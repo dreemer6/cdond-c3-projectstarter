@@ -10,8 +10,8 @@ scrape_configs:
   - job_name: 'node'
     ec2_sd_configs:
       - region: us-east-1
-        access_key: AKIAYN3PIIUBJMNPNXMV
-        secret_key: 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
+        access_key: ${AWS_ACCESS_KEY_ID} # Pulled from CircleCI env var
+        secret_key: ${AWS_ACCESS_SECRET_KEY} # Pulled from CircleCI env var
         port: 9100
 EOF
 

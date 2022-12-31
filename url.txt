@@ -1,2 +1,2 @@
 URL01: https://github.com/dreemer6/cdond-c3-projectstarter
-URL02: http://http://udapeople-5341069.s3-website-us-east-1.amazonaws.com/#/employees
+URL02: http://udapeople-651fad3.s3-website-us-east-1.amazonaws.com/#/employees
